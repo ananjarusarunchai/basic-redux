@@ -24,9 +24,15 @@ class Users extends Component {
     componentWillReceiveProps(nextProps) {
         debugger;
         if (nextProps.users !== this.props.users) { //bad practice
-            this.setState({ users: nextProps.users.results });
+            const newState = nextProps.users;
+            this.setState({ users: newState });
             this.setState({ isLoading: false });
         }
+    }
+
+    handleOnClick = (id) => {
+        debugger;
+        this.props.userActions.deleteUser(this.state.users, id);
     }
 
     render() {
@@ -39,7 +45,7 @@ class Users extends Component {
             return (
                 <React.Fragment>
                     <div className="user-item-layout">
-                        <UsersList users={this.state.users} />
+                        <UsersList users={this.state.users} handleOnClick={this.handleOnClick} />
                     </div>
                 </React.Fragment>
             )
@@ -48,11 +54,12 @@ class Users extends Component {
 };
 
 Users.propTypes = {
-    users: PropTypes.object.isRequired,
+    users: PropTypes.array,//PropTypes.arrayOf(PropTypes.object),
     userActions: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
+    debugger;
     return {
         users: state.Users
     }
