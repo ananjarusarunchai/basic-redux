@@ -22,7 +22,6 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        debugger;
         if (nextProps.users !== this.props.users) { //bad practice
             const newState = nextProps.users;
             this.setState({ users: newState });
@@ -31,7 +30,6 @@ class Users extends Component {
     }
 
     handleOnClick = (id) => {
-        debugger;
         this.props.userActions.deleteUser(this.state.users, id);
     }
 
@@ -59,7 +57,6 @@ Users.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    debugger;
     return {
         users: state.Users
     }

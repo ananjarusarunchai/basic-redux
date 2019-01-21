@@ -1,5 +1,6 @@
 import { FETCH_USERS, DELETE_USER } from '../constants/UsersActionTypes';
 import { API_ROOT_URL } from '../constants/Constant';
+import _ from 'lodash';
 
 export function fetchUsersSuccess(users) {
     return { type: FETCH_USERS, users: users }
@@ -11,7 +12,7 @@ export function deleteUserSuccess(users) {
 
 export function fetchUsers() {
     return function (dispatch) {
-        fetch(`${API_ROOT_URL}?results=10`)
+        fetch(`${API_ROOT_URL}?results=100`)
             .then(response => response.json())
             .then(data => dispatch(fetchUsersSuccess(data.results)));
     }
@@ -20,7 +21,7 @@ export function fetchUsers() {
 export function deleteUser(users, id) {
     return function (dispatch) {
         const newUsers = users.filter((user) => {
-            return user.id.value !== id
+            return user.login.uuid !== id
         });
         dispatch(deleteUserSuccess(newUsers));
     }

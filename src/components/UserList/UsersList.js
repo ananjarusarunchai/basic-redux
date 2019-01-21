@@ -5,8 +5,9 @@ import UserItem from '../UserItem/UserItem';
 const UsersList = ({ users, handleOnClick }) => {
     return (
         users.map((user, index) => {
+            const id = user.login.uuid;
             return (
-                <React.Fragment key={`${user.id.value}${index}`}>
+                <React.Fragment key={`${id}`}>
                     <UserItem  userDetail={user} clickHandler={handleOnClick}/>
                 </React.Fragment>
             );
