@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
 import '../css/App.css';
-import User from '../containers/Users/Users';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Navbar from '../components/navbar/Navbar';
+import Main from '../main';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        { id: 'home', text: 'Home', link: '/' },
+        { id: 'news', text: 'News', link: '/news' },
+        { id: 'contact', text: 'Contact', link: '/contact' },
+        { id: 'about', text: 'About', link: '/about' }
+      ]
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <Router>
+        <div className="App">
           <div className="layout">
-            <User />
+            <Navbar items={this.state.items} />
+            <Main />
           </div>
-        </header>
-      </div>
+        </div >
+      </Router>
     );
   }
 }

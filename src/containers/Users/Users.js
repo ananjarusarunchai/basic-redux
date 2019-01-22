@@ -18,6 +18,10 @@ class Users extends Component {
     }
 
     componentWillMount() {
+        if(this.props.users.length > 0) {
+            this.setState({ isLoading: false });
+            return;
+        }
         this.props.userActions.fetchUsers();
     }
 
@@ -43,7 +47,7 @@ class Users extends Component {
             return (
                 <React.Fragment>
                     <div className="user-item-layout">
-                        <UsersList users={this.state.users} handleOnClick={this.handleOnClick} />
+                        <UsersList users={this.props.users} handleOnClick={this.handleOnClick} />
                     </div>
                 </React.Fragment>
             )
