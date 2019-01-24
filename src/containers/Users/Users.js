@@ -13,15 +13,15 @@ class Users extends Component {
         super(props, context);
         this.state = {
             users: [],
-            isLoading: true
+            isLoading: false
         }
     }
 
     componentWillMount() {
         if(this.props.users.length > 0) {
-            this.setState({ isLoading: false });
             return;
         }
+        this.setState({ isLoading: true });
         this.props.userActions.fetchUsers();
     }
 
