@@ -1,35 +1,64 @@
 
 import React, { Component } from 'react';
-import { API_ROOT_URL } from '../../constants/Constant';
-
-// import { PropTypes } from 'prop-types';
-
+import { connect } from 'react-redux';
+import * as NewsAction from '../../actions/NewsAction';
+import { PropTypes } from 'prop-types';
+import { bindActionCreators } from 'redux';
+import NewsList from '../../components/News/NewsList';
 
 class News extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            users: [],
+            news: {},
             isLoading: true
         }
     }
 
-    componentWillMount() {
-        fetch(`${API_ROOT_URL}?results=${10}`)
-            .then(response => response.json())    }
 
+    componentWillMount() {
+        this.props.newsAction.fetchNews();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        debugger;
+    }
 
 
     render() {
         return (
-            // <React.Fragment>
-                <div>News</div>
-            // </React.Fragment>
+            <React.Fragment>
+                <div>
+                    <NewsList articles={this.props.news} />
+                </div>
+            </React.Fragment>
+
         )
     }
 };
 
-export default News;
+News.propTypes = {
+    news: PropTypes.array,
+    newsAction: PropTypes.object
+}
+
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        news: state.News
+    }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        newsAction: bindActionCreators(NewsAction, dispatch)
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(News);
 
 
 

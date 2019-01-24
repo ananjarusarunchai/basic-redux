@@ -1,0 +1,31 @@
+.news_img {
+    width: 600px;
+    height: 270px;
+    padding-top: 10px;
+}
+
+.news_container {
+    max-height: 550px;
+    max-width: 600px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #dddfe2;
+    background-color: #fff;
+}
+
+.news_content {
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.news_title {
+    padding-left: 5px;
+    float: left;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.news_publish_date {
+    padding-left: 10px;
+    float: left;
+}
