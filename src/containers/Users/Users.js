@@ -1,12 +1,18 @@
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as UsersAction from '../../actions/UsersAction';
 import { PropTypes } from 'prop-types';
 import UsersList from '../../components/UserList/UsersList';
 import './users.css';
 import '../../css/utility.scss';
+import ReduxContainer from '../hoc/reduxContainer';
+import * as UsersAction from '../../actions/UsersAction';
+import { bindActionCreators } from '../../../../../../../Library/Caches/typescript/3.3/node_modules/redux';
+
+
+const UsersPropTypesState = {
+    users: PropTypes.array,
+    //PropTypes.arrayOf(PropTypes.object),
+};
 
 class Users extends Component {
     constructor(props, context) {
@@ -17,8 +23,9 @@ class Users extends Component {
         }
     }
 
-    componentWillMount() {
-        if(this.props.users.length > 0) {
+
+    componentDidMount() {
+        if (this.props.users.length > 0) {
             return;
         }
         this.setState({ isLoading: true });
@@ -55,25 +62,20 @@ class Users extends Component {
     }
 };
 
-Users.propTypes = {
-    users: PropTypes.array,//PropTypes.arrayOf(PropTypes.object),
-    userActions: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-        users: state.Users
-    }
-};
+Users.propTypes = { ...UsersPropTypesState, userActions: PropTypes.object.isRequired };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        userActions: bindActionCreators(UsersAction, dispatch) 
+        userActions: bindActionCreators(UsersAction, dispatch)
     }
 };
 
+const WrappedReduxComponent = ReduxContainer(Users, 
+    { 
+        'class': 'Users', 
+        'reducers': UsersPropTypesState,
+        'mapDispatchToProps' : mapDispatchToProps 
+    }
+);
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Users);
+export default WrappedReduxComponent;
