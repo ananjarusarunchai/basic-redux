@@ -6,8 +6,8 @@ import './users.css';
 import '../../css/utility.scss';
 import ReduxContainer from '../hoc/reduxContainer';
 import * as UsersAction from '../../actions/UsersAction';
-import { bindActionCreators } from '../../../../../../../Library/Caches/typescript/3.3/node_modules/redux';
-
+import { bindActionCreators } from 'redux';
+import UserModel from './model';
 
 const UsersPropTypesState = {
     users: PropTypes.array,
@@ -33,6 +33,7 @@ class Users extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        debugger;
         if (nextProps.users !== this.props.users) { //bad practice
             const newState = nextProps.users;
             this.setState({ users: newState });
@@ -45,20 +46,21 @@ class Users extends Component {
     }
 
     render() {
+        let component = null;
         if (this.state.isLoading) {
-            return (
-                <div className='lmask'></div>
-            )
+            component =  <UsersList users={new UserModel().getDefaultUsersTemplate()} />;
         }
         else {
-            return (
-                <React.Fragment>
-                    <div className="user-item-layout">
-                        <UsersList users={this.props.users} handleOnClick={this.handleOnClick} />
-                    </div>
-                </React.Fragment>
-            )
+            component =  <UsersList users={this.props.users} handleOnClick={this.handleOnClick} />;
         }
+        return (
+            <React.Fragment>
+                <div className="user-item-layout">
+                    {component}
+                    {this.state.isLoading && <div className='lmask'></div>}
+                </div>
+            </React.Fragment>
+        )
     }
 };
 
@@ -70,11 +72,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 };
 
-const WrappedReduxComponent = ReduxContainer(Users, 
-    { 
-        'class': 'Users', 
+const WrappedReduxComponent = ReduxContainer(Users,
+    {
+        'class': 'Users',
         'reducers': UsersPropTypesState,
-        'mapDispatchToProps' : mapDispatchToProps 
+        'mapDispatchToProps': mapDispatchToProps
     }
 );
 
