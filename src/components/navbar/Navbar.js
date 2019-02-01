@@ -6,7 +6,7 @@ import './navbar.scss';
 
 const createItems = (items) => {
     const itemsList = items.map((item) => {
-        return <li key={item.id}><NavLink exact activeClassName="active" onlyActiveOnIndex to={item.link}>{item.text}</NavLink></li>
+        return <li key={item.id}><NavLink exact={true} activeClassName="active" onlyActiveOnIndex to={item.link}>{item.text}</NavLink></li>
     });
 
     return itemsList;
